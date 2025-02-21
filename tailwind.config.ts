@@ -50,8 +50,9 @@ export default {
           "4": "hsl(var(--chart-4))",
           "5": "hsl(var(--chart-5))",
         },
-        darkblue: "hsl(var(--dark-blue))",
+        darkBlue: "hsl(var(--dark-blue))",
         lightblue: "hsl(var(--light-blue))",
+        lightGreen: "hsl(var(--light-green))",
       },
       borderRadius: {
         lg: "var(--radius)",
