@@ -3,10 +3,10 @@
 import { Calendar as CalendarUI } from "@/components/ui/calendar";
 import { useState } from "react";
 
-function Calendar() {
+function SidebarCalendar() {
   const [date, setDate] = useState<Date | undefined>(new Date());
 
   return <CalendarUI mode="single" selected={date} onSelect={setDate} />;
 }
 
-export default Calendar;
+export default SidebarCalendar;
