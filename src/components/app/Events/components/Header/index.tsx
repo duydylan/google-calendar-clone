@@ -5,7 +5,7 @@ function EventHeader() {
   const today = dayjs().format("DD MMM");
 
   return (
-    <div className="mt-6 px-4">
+    <div>
       <div className="flex justify-between items-center">
         <h3 className="text-lg font-bold text-primary">Upcoming Events</h3>
         <Button className="rounded-xl font-light text-[12px]" size="sm">

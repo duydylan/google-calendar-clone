@@ -1,9 +1,11 @@
+import EventList from "./components/EventList";
 import EventHeader from "./components/Header";
 
 function Events() {
   return (
-    <div>
+    <div className="mt-6 px-4">
       <EventHeader />
+      <EventList />
     </div>
   );
 }
