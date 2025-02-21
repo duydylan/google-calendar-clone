@@ -6,7 +6,11 @@ import { useState } from "react";
 function SidebarCalendar() {
   const [date, setDate] = useState<Date | undefined>(new Date());
 
-  return <CalendarUI mode="single" selected={date} onSelect={setDate} />;
+  return (
+    <div className="w-fit mx-auto">
+      <CalendarUI className="w-fit" mode="single" selected={date} onSelect={setDate} />
+    </div>
+  );
 }
 
 export default SidebarCalendar;

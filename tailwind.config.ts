@@ -55,6 +55,7 @@ export default {
         lightGreen: "hsl(var(--light-green))",
       },
       borderRadius: {
+        xl: "calc(var(--radius) + 22px)",
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
