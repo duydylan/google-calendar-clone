@@ -1,63 +1,69 @@
 import Link from "@/components/common/Link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
+import { EventType } from "@/models/enums";
+import { Event } from "@/models/interfaces";
+import { renderEventStyles } from "@/utils/event";
 import { Video } from "lucide-react";
 
-const secondIndex = 1;
-const lastIndex = 2;
-
 interface EventItemProps {
-  type: number;
+  event: Event;
+  isFull?: boolean;
 }
 
-function EventItem({ type }: EventItemProps) {
-  const bgs = ["bg-lightOrange", "bg-darkOrange", "bg-lightBlue"];
-  const borderColors = ["border-lightBlue", "border-darkBlue", "border-darkOrange"];
-
-  const iconBgs = ["bg-lightBlue", "", "bg-white"];
-  const iconColors = ["text-white", "", "text-lightBlue"];
+function EventItem({ event, isFull = true }: EventItemProps) {
+  const { bg, borderColor, titleColor, dateColor, iconBg, iconColor } = renderEventStyles({
+    type: event.type,
+    date: event.date,
+  });
 
   return (
-    <div
-      className={cn(
-        "rounded-md p-2 flex justify-between mb-2",
-        bgs[type],
-        `border-l-[5px] ${borderColors[type]}`
-      )}
-    >
-      <div>
-        <h3
-          className={cn("text-sm font-medium", type !== lastIndex ? "text-primary" : "text-white")}
-        >
-          First Session with Alex
-        </h3>
-        <div
-          className={cn("text-[12px] my-1", type !== lastIndex ? "text-lightBlue" : "text-white")}
-        >
-          9:00 AM - 9:30 AM GMT+8
-        </div>
-        <div className="flex items-center gap-3">
-          <Avatar className="size-[30px]">
-            <AvatarImage src="https://github.com/shadcn.png" alt="@Alex" />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
-          <Link href="" className={cn(type === lastIndex && "text-white")}>
-            View client profile
-          </Link>
-        </div>
-      </div>
-      {type !== secondIndex && (
+    <>
+      {isFull ? (
         <div
           className={cn(
-            "w-10 h-10 rounded-full flex justify-center items-center",
-            iconBgs[type],
-            iconColors[type]
+            "rounded-md p-2 flex justify-between mb-2",
+            bg,
+            `border-l-[5px] ${borderColor}`
           )}
         >
-          <Video />
+          <div>
+            <h3 className={cn("text-sm font-medium", titleColor)}>{event.title}</h3>
+            <div className={cn("text-[12px] my-1", dateColor)}>{event.date}</div>
+            <div className="flex items-center gap-3">
+              <Avatar className="size-[30px]">
+                <AvatarImage src="https://github.com/shadcn.png" alt="@Alex" />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
+              <Link href="" className={cn(dateColor)}>
+                View client profile
+              </Link>
+            </div>
+          </div>
+          {event.type === EventType.Appointment && (
+            <div
+              className={cn(
+                "w-10 h-10 rounded-full flex justify-center items-center",
+                iconBg,
+                iconColor
+              )}
+            >
+              <Video />
+            </div>
+          )}
+        </div>
+      ) : (
+        <div
+          className={cn(
+            "rounded-sm px-1 flex justify-between mb-1",
+            bg,
+            `border-l-[3px] ${borderColor}`
+          )}
+        >
+          <h3 className={cn("text-[11px] font-medium truncate", titleColor)}>{event.title}</h3>
         </div>
       )}
-    </div>
+    </>
   );
 }
 

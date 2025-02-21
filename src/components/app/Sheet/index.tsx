@@ -5,15 +5,20 @@ import {
   Select,
   SelectContent,
   SelectGroup,
+  SelectItem,
   SelectTrigger,
   SelectValue,
-  SelectItem,
 } from "@/components/ui/select";
-import { CalendarType } from "@/models/enums";
+import { cn } from "@/lib/utils";
+import { CalendarType, EventType } from "@/models/enums";
 import dayjs from "dayjs";
+import { capitalize } from "lodash";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
-import { capitalize } from "lodash";
+import EventItem from "../Sidebar/components/Events/components/EventItem";
+import EventList from "./components/EventList";
+
+const today = dayjs().format("YYYY-MM-DD");
 
 function Sheet() {
   const [currentMonth, setCurrentMonth] = useState(dayjs());
@@ -25,13 +30,27 @@ function Sheet() {
 
   const days = Array.from({ length: 42 }, (_, index) => {
     if (index < startOfMonth) {
-      return { day: prevMonthDays - startOfMonth + index + 1, current: false };
+      return {
+        day: prevMonthDays - startOfMonth + index + 1,
+        current: false,
+        date: currentMonth
+          .subtract(1, "month")
+          .date(prevMonthDays - startOfMonth + index + 1)
+          .format("YYYY-MM-DD"),
+      };
     }
     const day = index - startOfMonth + 1;
     if (day > 0 && day <= daysInMonth) {
-      return { day, current: true };
+      return { day, current: true, date: currentMonth.date(day).format("YYYY-MM-DD") };
     }
-    return { day: day - daysInMonth, current: false };
+    return {
+      day: day - daysInMonth,
+      current: false,
+      date: currentMonth
+        .add(1, "month")
+        .date(day - daysInMonth)
+        .format("YYYY-MM-DD"),
+    };
   });
 
   return (
@@ -81,15 +100,24 @@ function Sheet() {
               </div>
             ))}
           </div>
-          <div className="grid grid-cols-7 gap-1 mt-2">
+          <div className="grid grid-cols-7 gap-[2px] mt-2 bg-gray-100 border-y-[2px] rounded-b-md">
             {days.map((item, index) => (
               <div
                 key={index}
-                className={`h-10 flex items-center justify-center text-sm rounded-lg ${
-                  item.current ? "bg-gray-100 hover:bg-gray-200 cursor-pointer" : "text-gray-400"
-                }`}
+                className={cn(
+                  "h-24 text-sm bg-white cursor-pointer pt-1 hover:bg-lightGreen",
+                  item.current ? "" : "text-gray-400"
+                )}
               >
-                {item.day}
+                <span
+                  className={cn(
+                    "mx-auto flex justify-center items-center size-6 text-[13px] text-center rounded-full",
+                    item.date === today && "bg-lightBlue text-white text-[11px]"
+                  )}
+                >
+                  {item.day}
+                </span>
+                <EventList />
               </div>
             ))}
           </div>
