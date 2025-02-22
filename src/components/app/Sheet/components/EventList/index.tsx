@@ -4,7 +4,7 @@ import { EventType } from "@/models/enums";
 
 function EventList() {
   return (
-    <div className="mt-1">
+    <div className="mt-2">
       <div>
         <EventItem
           event={{
@@ -25,7 +25,9 @@ function EventList() {
           isFull={false}
         />
       </div>
-      <Link href="">5 more</Link>
+      <Link href="" className="ml-2">
+        5 more
+      </Link>
     </div>
   );
 }

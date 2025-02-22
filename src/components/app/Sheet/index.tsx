@@ -100,12 +100,12 @@ function Sheet() {
               </div>
             ))}
           </div>
-          <div className="grid grid-cols-7 gap-[2px] mt-2 bg-gray-100 border-y-[2px] rounded-b-md">
+          <div className="grid grid-cols-7 h-[calc(100vh-140px)] gap-[2px] mt-2 bg-gray-200 border-t-[2px] rounded-b-md">
             {days.map((item, index) => (
               <div
                 key={index}
                 className={cn(
-                  "h-24 text-sm bg-white cursor-pointer pt-1 hover:bg-lightGreen",
+                  " text-sm bg-white cursor-pointer pt-2 hover:bg-lightGreen",
                   item.current ? "" : "text-gray-400"
                 )}
               >
