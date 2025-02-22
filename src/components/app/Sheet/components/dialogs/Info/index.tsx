@@ -4,7 +4,8 @@ import EventItem from "@/components/app/Sidebar/components/Events/components/Eve
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Event } from "@/models/interfaces";
 import { Pencil, Trash2 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { SheetItemContext } from "../../SheetItem";
 import Content from "../Content";
 import Edit from "../Edit";
 import IconWrapper from "./components/Icon";
@@ -15,16 +16,33 @@ interface InfoDialogProps {
 
 function InfoDialog({ event }: InfoDialogProps) {
   const [isEdit, setIsEdit] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
+
+  const context = useContext(SheetItemContext);
+
+  const { isOpenInfoDialog, setIsOpenInfoDialog, isOpenAddDialog, setIsOpenAddDialog } =
+    context || {};
 
   useEffect(() => {
-    if (!isOpen) setIsEdit(false);
-  }, [isOpen]);
+    if (!isOpenInfoDialog) setIsEdit(false);
+  }, [isOpenInfoDialog]);
 
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+    <Dialog
+      open={isOpenInfoDialog}
+      onOpenChange={(isOpen) => {
+        setIsOpenInfoDialog?.(isOpen);
+        setTimeout(() => {
+          setIsOpenAddDialog?.(false);
+        }, 10);
+      }}
+    >
       <DialogTrigger asChild>
-        <div onClick={() => setIsOpen(true)}>
+        <div
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsOpenInfoDialog?.(true);
+          }}
+        >
           <EventItem event={event} isFull={false} />
         </div>
       </DialogTrigger>
