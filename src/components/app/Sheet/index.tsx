@@ -9,16 +9,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { cn } from "@/lib/utils";
-import { CalendarType, EventType } from "@/models/enums";
+import { CalendarType } from "@/models/enums";
 import dayjs from "dayjs";
 import { capitalize } from "lodash";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
-import EventItem from "../Sidebar/components/Events/components/EventItem";
-import EventList from "./components/EventList";
-
-const today = dayjs().format("YYYY-MM-DD");
+import SheetItem from "./components/SheetItem";
 
 function Sheet() {
   const [currentMonth, setCurrentMonth] = useState(dayjs());
@@ -32,7 +28,7 @@ function Sheet() {
     if (index < startOfMonth) {
       return {
         day: prevMonthDays - startOfMonth + index + 1,
-        current: false,
+        isCurrent: false,
         date: currentMonth
           .subtract(1, "month")
           .date(prevMonthDays - startOfMonth + index + 1)
@@ -41,11 +37,11 @@ function Sheet() {
     }
     const day = index - startOfMonth + 1;
     if (day > 0 && day <= daysInMonth) {
-      return { day, current: true, date: currentMonth.date(day).format("YYYY-MM-DD") };
+      return { day, isCurrent: true, date: currentMonth.date(day).format("YYYY-MM-DD") };
     }
     return {
       day: day - daysInMonth,
-      current: false,
+      isCurrent: false,
       date: currentMonth
         .add(1, "month")
         .date(day - daysInMonth)
@@ -101,24 +97,8 @@ function Sheet() {
             ))}
           </div>
           <div className="grid grid-cols-7 h-[calc(100vh-140px)] gap-[2px] mt-2 bg-gray-200 border-t-[2px] rounded-b-md">
-            {days.map((item, index) => (
-              <div
-                key={index}
-                className={cn(
-                  " text-sm bg-white cursor-pointer pt-2 hover:bg-lightGreen",
-                  item.current ? "" : "text-gray-400"
-                )}
-              >
-                <span
-                  className={cn(
-                    "mx-auto flex justify-center items-center size-6 text-[13px] text-center rounded-full",
-                    item.date === today && "bg-lightBlue text-white text-[11px]"
-                  )}
-                >
-                  {item.day}
-                </span>
-                <EventList />
-              </div>
+            {days.map(({ date, day, isCurrent }, index) => (
+              <SheetItem key={index} date={date} day={day} isCurrent={isCurrent} />
             ))}
           </div>
         </>

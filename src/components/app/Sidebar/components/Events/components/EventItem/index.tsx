@@ -3,7 +3,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 import { EventType } from "@/models/enums";
 import { Event } from "@/models/interfaces";
-import { renderEventStyles } from "@/utils/event";
+import { renderEventStyles } from "@/utils/event/renderStyles";
 import { Video } from "lucide-react";
 
 interface EventItemProps {
@@ -60,7 +60,7 @@ function EventItem({ event, isFull = true }: EventItemProps) {
             `border-l-[3px] ${borderColor}`
           )}
         >
-          <h3 className={cn("text-[11px] font-medium truncate", titleColor)}>{event.title}</h3>
+          <h3 className={cn("text-[12px] font-medium truncate", titleColor)}>{event.title}</h3>
         </div>
       )}
     </>
