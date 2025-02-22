@@ -9,10 +9,16 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   errors?: string[];
 }
 
-function Input({ label, errors, name, type, className, ...props }: InputProps) {
+function Input({ label, errors, name, type, required, className, ...props }: InputProps) {
   return (
     <FormGroup>
-      {label && <Label htmlFor={name}>{label}</Label>}
+      {label && (
+        <div className="flex">
+          <Label htmlFor={name}>
+            {label} {required && <span className="text-red-400">(*)</span>}{" "}
+          </Label>
+        </div>
+      )}
       <InputUI type={type || "text"} id={name} name={name} {...props} />
       {errors && (
         <div>

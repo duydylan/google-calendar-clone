@@ -1,14 +1,13 @@
 "use client";
 
-import * as React from "react";
-
+import { Minus } from "lucide-react";
+import { useState } from "react";
 import DatePicker from "../DatePicker";
 import TimePicker from "../TimePicker";
-import { Minus } from "lucide-react";
 
 function DateTimePicker() {
-  const [dateFrom, setDateFrom] = React.useState<Date>(new Date());
-  const [dateTo, setDateTo] = React.useState<Date>(new Date());
+  const [dateFrom, setDateFrom] = useState<Date>(new Date());
+  const [dateTo, setDateTo] = useState<Date>(new Date());
 
   return (
     <div className="grid grid-cols-2 items-center gap-4">
@@ -26,6 +25,8 @@ function DateTimePicker() {
           <TimePicker date={dateTo} setDate={setDateTo} />
         </div>
       </div>
+      <input type="hidden" name="timeFrom" value={dateFrom.toISOString()} />
+      <input type="hidden" name="timeTo" value={dateTo.toISOString()} />
     </div>
   );
 }

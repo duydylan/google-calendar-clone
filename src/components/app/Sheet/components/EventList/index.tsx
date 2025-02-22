@@ -20,13 +20,7 @@ function EventList() {
           <InfoDialog key={event.id} event={event} />
         ))}
       </div>
-      <Link
-        href=""
-        className="ml-2"
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
-      >
+      <Link href="" className="ml-2">
         5 more
       </Link>
     </div>

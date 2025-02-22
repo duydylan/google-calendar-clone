@@ -1,6 +1,8 @@
 "use client";
 
-import FormUI from "@/components/common/Form";
+import DateTimePicker from "@/components/common/DateTimePicker";
+import Form from "@/components/common/Form";
+import FormGroup from "@/components/common/FormGroup";
 import Input from "@/components/common/Input";
 import Select from "@/components/common/Select";
 import Textarea from "@/components/common/Textarea";
@@ -11,38 +13,41 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { EventType } from "@/models/enums";
-import { ReactNode, useContext, useState } from "react";
-import { SheetItemContext } from "../../SheetItem";
-import DateTimePicker from "@/components/common/DateTimePicker";
 import { Label } from "@/components/ui/label";
-import FormGroup from "@/components/common/FormGroup";
+import { createEventAction } from "@/lib/actions/event";
+import { FORM_INITIAL_STATE } from "@/models/constants";
+import { EventType } from "@/models/enums";
+import { CreateEventState } from "@/models/interfaces";
+import { ReactNode, useActionState, useState } from "react";
 
 interface AddProps {
   trigger: ReactNode;
 }
 function Add({ trigger }: AddProps) {
   const [eventType, setEventType] = useState<string>(EventType.Appointment);
+  const [isOpenAddDialog, setIsOpenAddDialog] = useState(false);
 
-  const context = useContext(SheetItemContext);
+  const handleEventAction = async (prevState: any, formData: FormData) => {
+    return createEventAction(prevState, formData, setIsOpenAddDialog);
+  };
 
-  const { isOpenAddDialog, setIsOpenAddDialog, isOpenInfoDialog } = context || {};
+  const [state, formAction, isPending] = useActionState(
+    handleEventAction,
+    FORM_INITIAL_STATE as CreateEventState
+  );
 
   return (
-    <Dialog
-      open={isOpenAddDialog}
-      onOpenChange={(isOpenAddDialog) => {
-        if (!isOpenInfoDialog) setIsOpenAddDialog?.(isOpenAddDialog);
-      }}
-    >
-      <DialogTrigger asChild>{trigger}</DialogTrigger>
+    <Dialog open={isOpenAddDialog} onOpenChange={setIsOpenAddDialog}>
+      <DialogTrigger asChild>
+        <div onClick={() => setIsOpenAddDialog?.(true)}>{trigger}</div>
+      </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Create Event</DialogTitle>
         </DialogHeader>
-        <FormUI submitLabel="Create">
-          <Input label="Title" name="title" autoFocus />
-          <Textarea label="Description" name="description" />
+        <Form action={formAction} submitLabel="Create">
+          <Input label="Title" name="title" errors={state.errors?.title} required autoFocus />
+          <Textarea label="Description" name="description" errors={state.errors?.description} />
           <Select
             label="Type"
             options={[
@@ -64,7 +69,7 @@ function Add({ trigger }: AddProps) {
             <Label>Time</Label>
             <DateTimePicker />
           </FormGroup>
-        </FormUI>
+        </Form>
       </DialogContent>
     </Dialog>
   );
