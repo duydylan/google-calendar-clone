@@ -14,6 +14,9 @@ import {
 import { EventType } from "@/models/enums";
 import { ReactNode, useContext, useState } from "react";
 import { SheetItemContext } from "../../SheetItem";
+import DateTimePicker from "@/components/common/DateTimePicker";
+import { Label } from "@/components/ui/label";
+import FormGroup from "@/components/common/FormGroup";
 
 interface AddProps {
   trigger: ReactNode;
@@ -39,6 +42,7 @@ function Add({ trigger }: AddProps) {
         </DialogHeader>
         <FormUI submitLabel="Create">
           <Input label="Title" name="title" autoFocus />
+          <Textarea label="Description" name="description" />
           <Select
             label="Type"
             options={[
@@ -56,7 +60,10 @@ function Add({ trigger }: AddProps) {
             onValueChange={setEventType}
           />
           <input type="hidden" name="type" value={eventType} />
-          <Textarea label="Description" name="description" />
+          <FormGroup>
+            <Label>Time</Label>
+            <DateTimePicker />
+          </FormGroup>
         </FormUI>
       </DialogContent>
     </Dialog>

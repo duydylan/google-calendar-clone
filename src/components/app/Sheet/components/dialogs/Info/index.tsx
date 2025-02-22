@@ -33,7 +33,7 @@ function InfoDialog({ event }: InfoDialogProps) {
         setIsOpenInfoDialog?.(isOpen);
         setTimeout(() => {
           setIsOpenAddDialog?.(false);
-        }, 10);
+        }, 50);
       }}
     >
       <DialogTrigger asChild>
