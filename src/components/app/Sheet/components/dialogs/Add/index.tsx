@@ -16,8 +16,9 @@ import {
 import { Label } from "@/components/ui/label";
 import { createEventAction } from "@/lib/actions/event";
 import { FORM_INITIAL_STATE } from "@/models/constants";
-import { EventType } from "@/models/enums";
+import { EventQueryKeys, EventType } from "@/models/enums";
 import { CreateEventState } from "@/models/interfaces";
+import { useQueryClient } from "@tanstack/react-query";
 import { ReactNode, useActionState, useState } from "react";
 
 interface AddProps {
@@ -27,8 +28,21 @@ function Add({ trigger }: AddProps) {
   const [eventType, setEventType] = useState<string>(EventType.Appointment);
   const [isOpenAddDialog, setIsOpenAddDialog] = useState(false);
 
+  const queryClient = useQueryClient();
+
+  const handleCloseDialog = () => {
+    setIsOpenAddDialog(false);
+  };
+
   const handleEventAction = async (prevState: any, formData: FormData) => {
-    return createEventAction(prevState, formData, setIsOpenAddDialog);
+    const result = await createEventAction(prevState, formData);
+
+    if (!result.errors) {
+      handleCloseDialog();
+      queryClient.invalidateQueries({ queryKey: [EventQueryKeys.GetEvents] });
+    }
+
+    return result;
   };
 
   const [state, formAction, isPending] = useActionState(
@@ -45,7 +59,7 @@ function Add({ trigger }: AddProps) {
         <DialogHeader>
           <DialogTitle>Create Event</DialogTitle>
         </DialogHeader>
-        <Form action={formAction} submitLabel="Create">
+        <Form action={formAction} submitLabel="Create" isLoading={isPending}>
           <Input label="Title" name="title" errors={state.errors?.title} required autoFocus />
           <Textarea label="Description" name="description" errors={state.errors?.description} />
           <Select

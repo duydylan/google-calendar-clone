@@ -1,3 +1,6 @@
+"use server";
+
+import { createEventAPI } from "@/app/api/event";
 import { EventType } from "@/models/enums";
 import { CreateEventState } from "@/models/interfaces";
 import { revalidatePath } from "next/cache";
@@ -9,7 +12,7 @@ const FormSchema = z.object({
     message: "Please enter title.",
   }),
   description: z.optional(z.string()),
-  type: z.optional(z.nativeEnum(EventType)),
+  type: z.nativeEnum(EventType),
   timeFrom: z.string().min(1, {
     message: "Please enter time start.",
   }),
@@ -18,11 +21,7 @@ const FormSchema = z.object({
   }),
 });
 
-export async function createEventAction(
-  _: CreateEventState,
-  formData: FormData,
-  action?: (value: boolean) => void
-) {
+export async function createEventAction(_: CreateEventState, formData: FormData) {
   const validateFields = FormSchema.safeParse(Object.fromEntries(formData.entries()));
 
   if (!validateFields.success) {
@@ -37,8 +36,8 @@ export async function createEventAction(
   };
 
   try {
-    console.log(payload);
-    action?.(false);
+    await createEventAPI(payload);
+
     revalidatePath("/");
     redirect("/");
   } catch (error) {

@@ -1,4 +1,4 @@
-import { EventType } from "../enums";
+import { CalendarType, EventType } from "../enums";
 import { FormState } from "./common";
 
 export interface Event {
@@ -24,4 +24,7 @@ export interface CreateEventState
     timeFrom?: string[];
     timeTo?: string[];
   }> {}
-export interface GetEventParams {}
+export interface GetEventParams {
+  type: CalendarType;
+  date: string;
+}
