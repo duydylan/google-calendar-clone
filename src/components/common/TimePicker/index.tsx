@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import generateTime from "@/utils/day/generateTime";
 import dayjs from "dayjs";
@@ -36,7 +36,7 @@ function TimePicker({ date, setDate }: TimePickerProps) {
           {date ? dayjs(date).format("hh:mm A") : <span>hh:mm A</span>}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-auto p-0 overflow-auto">
+      <PopoverContent className="w-auto p-0">
         <div className="flex flex-col sm:flex-row sm:max-h-[300px] divide-y sm:divide-y-0 sm:divide-x">
           <ScrollArea className="w-64 sm:w-auto">
             <div className="flex sm:flex-col p-2">
@@ -52,6 +52,7 @@ function TimePicker({ date, setDate }: TimePickerProps) {
                 </Button>
               ))}
             </div>
+            <ScrollBar orientation="horizontal" className="sm:hidden" />
           </ScrollArea>
           <ScrollArea className="w-64 sm:w-auto">
             <div className="flex sm:flex-col p-2">
@@ -67,6 +68,7 @@ function TimePicker({ date, setDate }: TimePickerProps) {
                 </Button>
               ))}
             </div>
+            <ScrollBar orientation="horizontal" className="sm:hidden" />
           </ScrollArea>
           <ScrollArea className="">
             <div className="flex sm:flex-col p-2">
@@ -88,6 +90,7 @@ function TimePicker({ date, setDate }: TimePickerProps) {
                 </Button>
               ))}
             </div>
+            <ScrollBar orientation="horizontal" className="sm:hidden" />
           </ScrollArea>
         </div>
       </PopoverContent>
