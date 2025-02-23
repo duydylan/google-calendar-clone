@@ -20,6 +20,7 @@ import { EventQueryKeys, EventType } from "@/models/enums";
 import { CreateEventState } from "@/models/interfaces";
 import { useQueryClient } from "@tanstack/react-query";
 import { ReactNode, useActionState, useState } from "react";
+import { toast } from "sonner";
 
 interface AddProps {
   trigger: ReactNode;
@@ -40,6 +41,7 @@ function Add({ trigger, dateSelected }: AddProps) {
 
     if (!result.errors) {
       handleCloseDialog();
+      toast("Event has been created.");
       queryClient.invalidateQueries({ queryKey: [EventQueryKeys.GetEvents] });
       queryClient.invalidateQueries({ queryKey: [EventQueryKeys.GetUpComing] });
     }

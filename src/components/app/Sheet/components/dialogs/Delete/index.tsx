@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { EventQueryKeys } from "@/models/enums";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 interface DeleteDialogProps {
   id: string;
@@ -25,6 +26,7 @@ function DeleteDialog({ id, isOpenDialog, setIsOpenDialog }: DeleteDialogProps) 
       return deleteEventAPI({ id });
     },
     onSuccess: () => {
+      toast("Event has been deleted.");
       queryClient.invalidateQueries({ queryKey: [EventQueryKeys.GetEvents] });
       queryClient.invalidateQueries({ queryKey: [EventQueryKeys.GetUpComing] });
     },

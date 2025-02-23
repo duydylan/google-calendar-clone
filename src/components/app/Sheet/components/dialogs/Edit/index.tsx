@@ -11,6 +11,7 @@ import { EventQueryKeys, EventType } from "@/models/enums";
 import { CreateEventState, Event } from "@/models/interfaces";
 import { useQueryClient } from "@tanstack/react-query";
 import { useActionState, useState } from "react";
+import { toast } from "sonner";
 
 interface EditProps {
   event: Event;
@@ -33,6 +34,7 @@ function Edit({ event, setIsOpenDialog }: EditProps) {
 
     if (!result.errors) {
       handleCloseDialog();
+      toast("Event has been edited.");
       queryClient.invalidateQueries({ queryKey: [EventQueryKeys.GetEvents] });
       queryClient.invalidateQueries({ queryKey: [EventQueryKeys.GetUpComing] });
     }
