@@ -14,7 +14,7 @@ function DateTimePicker({ defaultDateFrom }: DateTimePickerProps) {
   const [dateTo, setDateTo] = useState<Date>(new Date());
 
   return (
-    <div className="grid grid-cols-2 items-center gap-4">
+    <div className="grid grid-rows-2 sm:grid-cols-2 items-center gap-4">
       <div className="col-span-1">
         <DatePicker date={dateFrom} setDate={setDateFrom} />
       </div>

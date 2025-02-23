@@ -4,7 +4,7 @@ import Events from "./components/Events";
 
 function Sidebar() {
   return (
-    <aside className="w-[320px] rounded-lg border bg-white">
+    <aside className="w-full sm:w-[320px] rounded-lg border bg-white">
       <Calendar />
       <Separator />
       <Events />

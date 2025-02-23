@@ -15,9 +15,7 @@ import { capitalize } from "lodash";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 
-interface HeaderProps {}
-
-function Header({}: HeaderProps) {
+function Header() {
   const { type, year, month, day } = useParams();
   const router = useRouter();
 
@@ -41,7 +39,7 @@ function Header({}: HeaderProps) {
 
   return (
     <div className="flex justify-between items-center mb-4 p-4">
-      <div className="flex items-center gap-3 text-primary">
+      <div className="flex items-center gap-1 sm:gap-3 text-primary">
         <Button
           variant="outline"
           size="sm"
@@ -62,7 +60,7 @@ function Header({}: HeaderProps) {
         >
           <ChevronRight size={20} />
         </span>
-        <h2 className="text-lg font-semibold">{currentMonth.format("MMMM YYYY")}</h2>
+        <h2 className="text-md sm:text-lg font-semibold">{currentMonth.format("MMMM YYYY")}</h2>
       </div>
       <div>
         <Select value={viewType} onValueChange={setViewType}>

@@ -7,8 +7,6 @@ import { useParams } from "next/navigation";
 import { useEvents } from "../../hooks";
 import SheetItem from "../SheetItem";
 
-interface GridProps {}
-
 function Grid() {
   const { type, year, month, day } = useParams();
 
