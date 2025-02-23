@@ -24,7 +24,7 @@ function TimePicker({ date, setDate }: TimePickerProps) {
   };
 
   return (
-    <Popover open={isOpen} onOpenChange={setIsOpen}>
+    <Popover open={isOpen} onOpenChange={setIsOpen} modal={true}>
       <PopoverTrigger asChild>
         <Button
           variant="outline"
@@ -36,8 +36,8 @@ function TimePicker({ date, setDate }: TimePickerProps) {
           {date ? dayjs(date).format("hh:mm A") : <span>hh:mm A</span>}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-auto p-0">
-        <div className="flex flex-col sm:flex-row sm:h-[300px] divide-y sm:divide-y-0 sm:divide-x">
+      <PopoverContent className="w-auto p-0 overflow-auto">
+        <div className="flex flex-col sm:flex-row sm:max-h-[300px] divide-y sm:divide-y-0 sm:divide-x">
           <ScrollArea className="w-64 sm:w-auto">
             <div className="flex sm:flex-col p-2">
               {hours.reverse().map((hour) => (
