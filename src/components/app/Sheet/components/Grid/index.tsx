@@ -1,15 +1,21 @@
+"use client";
+
 import { CalendarType } from "@/models/enums";
 import { findEvents } from "@/utils/event/findEvents";
 import dayjs from "dayjs";
+import { useParams } from "next/navigation";
 import { useEvents } from "../../hooks";
 import SheetItem from "../SheetItem";
 
-interface GridProps {
-  currentMonth: dayjs.Dayjs;
-  viewType: string;
-}
+interface GridProps {}
 
-function Grid({ currentMonth, viewType }: GridProps) {
+function Grid() {
+  const { type, year, month, day } = useParams();
+
+  const viewType = String(type);
+  const currentDate = `${year}/${month}/${day}`;
+  const currentMonth = dayjs(currentDate);
+
   const { data: listEvents } = useEvents(
     CalendarType.Month,
     dayjs(new Date()).format("YYYY-MM-DD")
