@@ -45,7 +45,7 @@ export async function editEventAPI(payload: UpdateEventPayload) {
   }
 }
 
-export async function getEvents(filter: CalendarType, date: string): Promise<Event[]> {
+export async function getEventsAPI(filter: CalendarType, date: string): Promise<Event[]> {
   const result = await sql<EventSchema[]>`
       SELECT * FROM events
       WHERE time_from >= date_trunc('month', ${date}::TIMESTAMP) - INTERVAL '1 month'
@@ -57,4 +57,11 @@ export async function getEvents(filter: CalendarType, date: string): Promise<Eve
     timeFrom: item.time_from,
     timeTo: item.time_to,
   }));
+}
+
+export async function deleteEventAPI({ id }: ById) {
+  return await sql<EventSchema[]>`
+      DELETE FROM events
+      WHERE id = ${id};
+    `;
 }
