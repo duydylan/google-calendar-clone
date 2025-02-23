@@ -6,7 +6,7 @@ This is a submission of DuyDuong for code challenge of MasterBranch. It is a Goo
 
 ## Live Demo
 
-Check out the [live demo](https://nextjs.org).
+Check out the [live demo](https://masterbranch-code-challenge-duy-duong-batq.vercel.app/).
 
 ## Tech Stack
 
