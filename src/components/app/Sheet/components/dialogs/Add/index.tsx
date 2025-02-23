@@ -23,8 +23,9 @@ import { ReactNode, useActionState, useState } from "react";
 
 interface AddProps {
   trigger: ReactNode;
+  dateSelected: string;
 }
-function Add({ trigger }: AddProps) {
+function Add({ trigger, dateSelected }: AddProps) {
   const [eventType, setEventType] = useState<string>(EventType.Appointment);
   const [isOpenAddDialog, setIsOpenAddDialog] = useState(false);
 
@@ -81,7 +82,7 @@ function Add({ trigger }: AddProps) {
           <input type="hidden" name="type" value={eventType} />
           <FormGroup>
             <Label>Time</Label>
-            <DateTimePicker />
+            <DateTimePicker defaultValue={dateSelected} />
           </FormGroup>
         </Form>
       </DialogContent>

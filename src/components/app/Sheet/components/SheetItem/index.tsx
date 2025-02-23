@@ -1,12 +1,8 @@
-"use client";
-
 import { cn } from "@/lib/utils";
+import { Event } from "@/models/interfaces";
 import { getToday } from "@/utils/day/getToday";
 import EventList from "../EventList";
 import AddDialog from "../dialogs/Add";
-import { useEvents } from "./hooks";
-import dayjs from "dayjs";
-import { CalendarType } from "@/models/enums";
 
 const today = getToday();
 
@@ -14,22 +10,13 @@ interface SheetItemProps {
   isCurrent: boolean;
   date: string;
   day: number;
+  events: Event[];
 }
 
-function SheetItem({ isCurrent, date, day }: SheetItemProps) {
-  const { data, isLoading, error } = useEvents(
-    CalendarType.Month,
-    dayjs(new Date()).format("YYYY-MM-DD")
-  );
-
-  console.log(data);
-
+function SheetItem({ isCurrent, date, day, events }: SheetItemProps) {
   return (
     <div
-      className={cn(
-        "text-sm bg-white cursor-pointer pt-2 relative z-10",
-        isCurrent ? "" : "text-gray-400"
-      )}
+      className={cn("text-sm bg-white pt-2 relative z-10 h-auto", isCurrent ? "" : "text-gray-400")}
     >
       <span
         className={cn(
@@ -39,8 +26,11 @@ function SheetItem({ isCurrent, date, day }: SheetItemProps) {
       >
         {day}
       </span>
-      <EventList />
-      <AddDialog trigger={<div className="w-full min-h-[50px]"></div>} />
+      <EventList events={events} />
+      <AddDialog
+        trigger={<div className="w-full min-h-[30px] cursor-pointer"></div>}
+        dateSelected={date}
+      />
     </div>
   );
 }

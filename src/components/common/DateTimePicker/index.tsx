@@ -5,8 +5,12 @@ import { useState } from "react";
 import DatePicker from "../DatePicker";
 import TimePicker from "../TimePicker";
 
-function DateTimePicker() {
-  const [dateFrom, setDateFrom] = useState<Date>(new Date());
+interface DateTimePickerProps {
+  defaultValue: string;
+}
+
+function DateTimePicker({ defaultValue }: DateTimePickerProps) {
+  const [dateFrom, setDateFrom] = useState<Date>(new Date(defaultValue));
   const [dateTo, setDateTo] = useState<Date>(new Date());
 
   return (

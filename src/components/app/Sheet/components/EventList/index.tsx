@@ -1,28 +1,28 @@
 import Link from "@/components/common/Link";
-import { EventType } from "@/models/enums";
+import { Event } from "@/models/interfaces";
 import InfoDialog from "../dialogs/Info";
 
-function EventList() {
-  const events = [
-    {
-      id: "1",
-      date: "2025-02-22",
-      title: "Webinar 2",
-      description: "Webinar for interview",
-      type: EventType.Webinar,
-    },
-  ];
+interface EventListProps {
+  events: Event[];
+}
+
+function EventList({ events }: EventListProps) {
+  const count = events.length - 2;
+
+  const list = count > 0 ? events.slice(0, 2) : events;
 
   return (
     <div className="mt-2">
       <div>
-        {events.map((event) => (
+        {list.map((event) => (
           <InfoDialog key={event.id} event={event} />
         ))}
       </div>
-      <Link href="" className="ml-2">
-        5 more
-      </Link>
+      {count > 0 && (
+        <Link href="" className="ml-2">
+          {count} more
+        </Link>
+      )}
     </div>
   );
 }

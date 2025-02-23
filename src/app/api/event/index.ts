@@ -2,7 +2,7 @@
 
 import { sql } from "@/lib/db";
 import { CalendarType } from "@/models/enums";
-import { CreateEventPayload } from "@/models/interfaces";
+import { CreateEventPayload, Event, EventSchema } from "@/models/interfaces";
 
 export async function createEventAPI(payload: CreateEventPayload) {
   try {
@@ -19,9 +19,16 @@ export async function createEventAPI(payload: CreateEventPayload) {
   }
 }
 
-export async function getEvents(filter: CalendarType, date: string) {
-  return await sql`
+export async function getEvents(filter: CalendarType, date: string): Promise<Event[]> {
+  const result = await sql<EventSchema[]>`
       SELECT * FROM events
-      WHERE DATE_TRUNC(${filter}, time_from) = DATE_TRUNC(${filter}, ${date}::TIMESTAMP);
+      WHERE time_from >= date_trunc('month', ${date}::TIMESTAMP) - INTERVAL '1 month'
+      AND time_from < date_trunc('month', ${date}::TIMESTAMP) + INTERVAL '1 month';
     `;
+
+  return result.map((item) => ({
+    ...item,
+    timeFrom: item.time_from,
+    timeTo: item.time_to,
+  }));
 }

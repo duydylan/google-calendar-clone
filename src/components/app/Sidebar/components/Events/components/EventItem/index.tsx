@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import { EventType } from "@/models/enums";
 import { Event } from "@/models/interfaces";
 import { renderEventStyles } from "@/utils/event/renderStyles";
+import dayjs from "dayjs";
 import { Video } from "lucide-react";
 
 interface EventItemProps {
@@ -14,8 +15,11 @@ interface EventItemProps {
 function EventItem({ event, isFull = true }: EventItemProps) {
   const { bg, borderColor, titleColor, dateColor, iconBg, iconColor } = renderEventStyles({
     type: event.type,
-    date: event.date,
+    date: event.timeFrom,
   });
+
+  const timeFrom = dayjs(event.timeFrom).format("hh:mm A");
+  const timeTo = dayjs(event.timeTo).format("hh:mm A");
 
   return (
     <>
@@ -29,7 +33,7 @@ function EventItem({ event, isFull = true }: EventItemProps) {
         >
           <div>
             <h3 className={cn("text-sm font-medium", titleColor)}>{event.title}</h3>
-            <div className={cn("text-[12px] my-1", dateColor)}>{event.date}</div>
+            <div className={cn("text-[12px] my-1", dateColor)}>{`${timeFrom} - ${timeTo}`}</div>
             <div className="flex items-center gap-3">
               <Avatar className="size-[30px]">
                 <AvatarImage src="https://github.com/shadcn.png" alt="@Alex" />
