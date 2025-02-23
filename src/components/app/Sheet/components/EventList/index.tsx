@@ -1,6 +1,7 @@
 import Link from "@/components/common/Link";
 import { Event } from "@/models/interfaces";
 import InfoDialog from "../dialogs/Info";
+import { sortBy } from "lodash";
 
 interface EventListProps {
   events: Event[];
@@ -9,12 +10,13 @@ interface EventListProps {
 function EventList({ events }: EventListProps) {
   const count = events.length - 2;
 
-  const list = count > 0 ? events.slice(0, 2) : events;
+  const listSorted = sortBy(events, (item) => item.timeFrom);
+  const listCounted = count > 0 ? listSorted.slice(0, 2) : listSorted;
 
   return (
     <div className="mt-2">
       <div>
-        {list.map((event) => (
+        {listCounted.map((event) => (
           <InfoDialog key={event.id} event={event} />
         ))}
       </div>

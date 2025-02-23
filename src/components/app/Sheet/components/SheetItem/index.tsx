@@ -16,7 +16,11 @@ interface SheetItemProps {
 function SheetItem({ isCurrent, date, day, events }: SheetItemProps) {
   return (
     <div
-      className={cn("text-sm bg-white pt-2 relative z-10 h-auto", isCurrent ? "" : "text-gray-400")}
+      className={cn(
+        "text-sm pt-2 relative z-10 h-auto",
+        isCurrent ? "" : "text-gray-400",
+        events.length === 0 ? "bg-white" : "bg-lightGreen"
+      )}
     >
       <span
         className={cn(
@@ -28,7 +32,7 @@ function SheetItem({ isCurrent, date, day, events }: SheetItemProps) {
       </span>
       <EventList events={events} />
       <AddDialog
-        trigger={<div className="w-full min-h-[30px] cursor-pointer"></div>}
+        trigger={<div className="w-full min-h-[60px] cursor-pointer"></div>}
         dateSelected={date}
       />
     </div>

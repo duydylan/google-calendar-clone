@@ -3,16 +3,23 @@ import { Inbox } from "lucide-react";
 
 interface EmptyProps {
   content?: string;
+  type?: "small" | "full";
 }
 
-function Empty({ content }: EmptyProps) {
+function Empty({ content, type }: EmptyProps) {
   return (
-    <Card className="w-full max-w-md">
-      <CardContent className="flex flex-col gap-2 items-center justify-center h-20 text-gray-500 text-sm p-0">
-        <Inbox />
-        {content ? content : "No data"}
-      </CardContent>
-    </Card>
+    <>
+      {type === "small" ? (
+        <span className="italic text-gray-500 text-sm">No data</span>
+      ) : (
+        <Card className="w-full max-w-md">
+          <CardContent className="flex flex-col gap-2 items-center justify-center h-20 p-0">
+            <Inbox />
+            <span className="italic text-gray-500 text-sm">{content ? content : "No data"}</span>
+          </CardContent>
+        </Card>
+      )}
+    </>
   );
 }
 
