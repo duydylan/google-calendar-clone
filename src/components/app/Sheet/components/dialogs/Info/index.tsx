@@ -25,8 +25,9 @@ function InfoDialog({ event }: InfoDialogProps) {
     <Dialog open={isOpenInfoDialog} onOpenChange={setIsOpenInfoDialog}>
       <DialogTrigger asChild>
         <div
-          onClick={(e) => {
-            setIsOpenInfoDialog?.(true);
+          className="cursor-pointer"
+          onClick={() => {
+            setIsOpenInfoDialog(true);
           }}
         >
           <EventItem event={event} isFull={false} />
@@ -40,7 +41,7 @@ function InfoDialog({ event }: InfoDialogProps) {
           <IconWrapper icon={<Trash2 size={16} />} tooltip="Delete event" />
         </div>
         {isEdit ? (
-          <Edit title={event.title} description={event.description} />
+          <Edit event={event} setIsOpenDialog={setIsOpenInfoDialog} />
         ) : (
           <Content event={event} />
         )}

@@ -1,5 +1,5 @@
 import { CalendarType, EventType } from "../enums";
-import { FormState } from "./common";
+import { ById, FormState } from "./common";
 
 export interface EventSchema {
   id: string;
@@ -24,14 +24,12 @@ export interface CreateEventPayload {
   timeFrom: string;
   timeTo: string;
 }
-export type UpdateEventPayload = Partial<CreateEventPayload>;
+export type UpdateEventPayload = Partial<CreateEventPayload> & ById;
 export interface CreateEventState
   extends FormState<{
     title?: string[];
     description?: string[];
     type?: string[];
-    timeFrom?: string[];
-    timeTo?: string[];
   }> {}
 export interface GetEventParams {
   type: CalendarType;

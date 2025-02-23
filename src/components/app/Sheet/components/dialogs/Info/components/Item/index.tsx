@@ -6,8 +6,8 @@ interface InfoItemProps extends PropsWithChildren {
 
 function InfoItem({ icon, children }: InfoItemProps) {
   return (
-    <div className="flex items-center gap-4 text-sm">
-      {icon}
+    <div className="flex items-start gap-4 text-sm">
+      <span>{icon}</span>
       <div>{children}</div>
     </div>
   );

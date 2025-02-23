@@ -65,6 +65,7 @@ function Add({ trigger, dateSelected }: AddProps) {
           <Textarea label="Description" name="description" errors={state.errors?.description} />
           <Select
             label="Type"
+            name="type"
             options={[
               {
                 label: "Appointment",
@@ -79,10 +80,9 @@ function Add({ trigger, dateSelected }: AddProps) {
             value={eventType}
             onValueChange={setEventType}
           />
-          <input type="hidden" name="type" value={eventType} />
           <FormGroup>
             <Label>Time</Label>
-            <DateTimePicker defaultValue={dateSelected} />
+            <DateTimePicker defaultDateFrom={dateSelected} />
           </FormGroup>
         </Form>
       </DialogContent>

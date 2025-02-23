@@ -2,7 +2,13 @@
 
 import { sql } from "@/lib/db";
 import { CalendarType } from "@/models/enums";
-import { CreateEventPayload, Event, EventSchema } from "@/models/interfaces";
+import {
+  ById,
+  CreateEventPayload,
+  Event,
+  EventSchema,
+  UpdateEventPayload,
+} from "@/models/interfaces";
 
 export async function createEventAPI(payload: CreateEventPayload) {
   try {
@@ -13,6 +19,26 @@ export async function createEventAPI(payload: CreateEventPayload) {
           VALUES (${title}, ${
       description || ""
     }, ${type}, ${timeFrom}::TIMESTAMPTZ, ${timeTo}::TIMESTAMPTZ, now(), now());
+      `;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function editEventAPI(payload: UpdateEventPayload) {
+  try {
+    const { id, title, description, type, timeFrom, timeTo } = payload;
+
+    return await sql`
+          UPDATE events
+          SET 
+            title = COALESCE(${title ?? null}, title),
+            description = COALESCE(${description ?? null}, description),
+            type = COALESCE(${type ?? null}, type),
+            time_from = COALESCE(${timeFrom ?? null}::TIMESTAMPTZ, time_from),
+            time_to = COALESCE(${timeTo ?? null}::TIMESTAMPTZ, time_to),
+            modified_at = now()
+          WHERE id = ${id};
       `;
   } catch (error) {
     console.log(error);

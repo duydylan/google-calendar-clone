@@ -6,11 +6,11 @@ import DatePicker from "../DatePicker";
 import TimePicker from "../TimePicker";
 
 interface DateTimePickerProps {
-  defaultValue: string;
+  defaultDateFrom: string;
 }
 
-function DateTimePicker({ defaultValue }: DateTimePickerProps) {
-  const [dateFrom, setDateFrom] = useState<Date>(new Date(defaultValue));
+function DateTimePicker({ defaultDateFrom }: DateTimePickerProps) {
+  const [dateFrom, setDateFrom] = useState<Date>(new Date(defaultDateFrom));
   const [dateTo, setDateTo] = useState<Date>(new Date());
 
   return (

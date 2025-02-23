@@ -11,13 +11,14 @@ import FormGroup from "../FormGroup";
 
 interface SelectProps {
   label?: string;
+  name?: string;
   options: OptionType[];
   defaultValue?: string;
   value: string;
   onValueChange: (value: string) => void;
 }
 
-function Select({ label, options, defaultValue, value, onValueChange }: SelectProps) {
+function Select({ label, name, options, defaultValue, value, onValueChange }: SelectProps) {
   return (
     <FormGroup>
       <Label>{label}</Label>
@@ -33,6 +34,7 @@ function Select({ label, options, defaultValue, value, onValueChange }: SelectPr
           ))}
         </SelectContent>
       </SelectUI>
+      <input type="hidden" name={name} value={value} />
     </FormGroup>
   );
 }
