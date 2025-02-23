@@ -29,6 +29,7 @@ function Edit({ event, setIsOpenDialog }: EditProps) {
     setIsOpenDialog(false);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleEventAction = async (prevState: any, formData: FormData) => {
     const result = await editEventAction(prevState, formData);
 

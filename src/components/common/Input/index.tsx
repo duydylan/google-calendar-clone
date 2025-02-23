@@ -9,7 +9,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   errors?: string[];
 }
 
-function Input({ label, errors, name, type, required, className, ...props }: InputProps) {
+function Input({ label, errors, name, type, required, ...props }: InputProps) {
   return (
     <FormGroup>
       {label && (

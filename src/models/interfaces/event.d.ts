@@ -25,12 +25,12 @@ export interface CreateEventPayload {
   timeTo: string;
 }
 export type UpdateEventPayload = Partial<CreateEventPayload> & ById;
-export interface CreateEventState
-  extends FormState<{
-    title?: string[];
-    description?: string[];
-    type?: string[];
-  }> {}
+
+export type CreateEventState = FormState<{
+  title?: string[];
+  description?: string[];
+  type?: string[];
+}>;
 export interface GetEventParams {
   type: CalendarType;
   date: string;

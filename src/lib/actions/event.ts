@@ -41,6 +41,8 @@ export async function createEventAction(_: CreateEventState, formData: FormData)
     revalidatePath("/");
     redirect("/");
   } catch (error) {
+    console.log(error);
+
     return {
       message: "Failed to create event.",
     };
@@ -77,6 +79,8 @@ export async function editEventAction(_: CreateEventState, formData: FormData) {
     revalidatePath("/");
     redirect("/");
   } catch (error) {
+    console.log(error);
+
     return {
       message: "Failed to create event.",
     };

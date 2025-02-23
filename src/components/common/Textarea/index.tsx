@@ -9,7 +9,7 @@ interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   errors?: string[];
 }
 
-function Textarea({ label, errors, name, className, ...props }: TextareaProps) {
+function Textarea({ label, errors, name, ...props }: TextareaProps) {
   return (
     <FormGroup>
       {label && <Label htmlFor={name}>{label}</Label>}
