@@ -4,4 +4,5 @@ export enum EventType {
 }
 export enum EventQueryKeys {
   GetEvents = "GetEvens",
+  GetUpComing = "GetUpcomingEvents",
 }

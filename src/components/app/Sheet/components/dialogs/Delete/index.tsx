@@ -26,6 +26,7 @@ function DeleteDialog({ id, isOpenDialog, setIsOpenDialog }: DeleteDialogProps) 
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [EventQueryKeys.GetEvents] });
+      queryClient.invalidateQueries({ queryKey: [EventQueryKeys.GetUpComing] });
     },
   });
 

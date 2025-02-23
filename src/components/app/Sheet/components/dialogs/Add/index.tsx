@@ -41,6 +41,7 @@ function Add({ trigger, dateSelected }: AddProps) {
     if (!result.errors) {
       handleCloseDialog();
       queryClient.invalidateQueries({ queryKey: [EventQueryKeys.GetEvents] });
+      queryClient.invalidateQueries({ queryKey: [EventQueryKeys.GetUpComing] });
     }
 
     return result;

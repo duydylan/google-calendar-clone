@@ -34,6 +34,7 @@ function Edit({ event, setIsOpenDialog }: EditProps) {
     if (!result.errors) {
       handleCloseDialog();
       queryClient.invalidateQueries({ queryKey: [EventQueryKeys.GetEvents] });
+      queryClient.invalidateQueries({ queryKey: [EventQueryKeys.GetUpComing] });
     }
 
     return result;

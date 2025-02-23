@@ -46,11 +46,22 @@ export async function editEventAPI(payload: UpdateEventPayload) {
 }
 
 export async function getEventsAPI(filter: CalendarType, date: string): Promise<Event[]> {
-  const result = await sql<EventSchema[]>`
+  const selectedDate = new Date(date).toISOString();
+
+  let result: EventSchema[] = [];
+
+  if (filter === CalendarType.Day) {
+    result = await sql<EventSchema[]>`
       SELECT * FROM events
-      WHERE time_from >= date_trunc('month', ${date}::TIMESTAMP) - INTERVAL '1 month'
-      AND time_from < date_trunc('month', ${date}::TIMESTAMP) + INTERVAL '1 month';
+      WHERE time_from = ${selectedDate}::TIMESTAMP
     `;
+  } else if (filter === CalendarType.Month) {
+    result = await sql<EventSchema[]>`
+    SELECT * FROM events
+    WHERE time_from >= date_trunc('month', ${date}::TIMESTAMP) - INTERVAL '1 month'
+    AND time_from < date_trunc('month', ${date}::TIMESTAMP) + INTERVAL '1 month';
+  `;
+  }
 
   return result.map((item) => ({
     ...item,

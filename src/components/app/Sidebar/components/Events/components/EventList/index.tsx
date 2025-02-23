@@ -1,29 +1,29 @@
-import { EventType } from "@/models/enums";
+"use client";
+
+import { getEventsAPI } from "@/app/api/event";
+import { CalendarType, EventQueryKeys } from "@/models/enums";
+import { useQuery } from "@tanstack/react-query";
+import dayjs from "dayjs";
 import EventItem from "../EventItem";
+import Empty from "@/components/common/Empty";
 
 function EventList() {
+  const { data } = useQuery({
+    queryKey: [EventQueryKeys.GetUpComing],
+    queryFn: async () => {
+      const date = dayjs(new Date()).format("YYYY-MM-DD");
+      const result = await getEventsAPI(CalendarType.Day, date);
+
+      return result.slice(0, 3);
+    },
+  });
+
   return (
     <div className="mt-3">
-      <EventItem event={{ id: "", date: "2023", title: "Webinar", type: EventType.Webinar }} />
-      <EventItem
-        event={{ id: "", date: "2025-02-22", title: "Webinar 2", type: EventType.Webinar }}
-      />
-      <EventItem
-        event={{
-          id: "",
-          date: "2023",
-          title: "First Session with Alex",
-          type: EventType.Appointment,
-        }}
-      />
-      <EventItem
-        event={{
-          id: "",
-          date: "2025-02-20",
-          title: "Second Session with Alex",
-          type: EventType.Appointment,
-        }}
-      />
+      {data?.length === 0 && <Empty content="No upcoming events" />}
+      {data?.map((event) => (
+        <EventItem key={event.id} event={event} />
+      ))}
     </div>
   );
 }

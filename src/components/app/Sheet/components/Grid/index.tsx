@@ -10,16 +10,14 @@ interface GridProps {
 }
 
 function Grid({ currentMonth, viewType }: GridProps) {
-  const {
-    data: listEvents,
-    isLoading,
-    error,
-  } = useEvents(CalendarType.Month, dayjs(new Date()).format("YYYY-MM-DD"));
+  const { data: listEvents } = useEvents(
+    CalendarType.Month,
+    dayjs(new Date()).format("YYYY-MM-DD")
+  );
 
   const startOfMonth = currentMonth.startOf("month").day();
   const daysInMonth = currentMonth.daysInMonth();
   const prevMonthDays = currentMonth.subtract(1, "month").daysInMonth();
-  console.log(listEvents);
 
   const days = Array.from({ length: 42 }, (_, index) => {
     if (index < startOfMonth) {
