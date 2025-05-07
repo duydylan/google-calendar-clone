@@ -1,12 +1,8 @@
-# Google Calendar - Code Challenge of MasterBranch
+# Google Calendar
 
 ## Overview
 
-This is a submission of DuyDuong for code challenge of MasterBranch. It is a Google Calendar-like application built using Next.js and PostgreSQL. It allows users to manage events with a filtering UI similar to Google Calendar, supporting navigation between previous and next months.
-
-## Live Demo
-
-Check out the [live demo](https://masterbranch-code-challenge-duy-duong-batq.vercel.app/).
+It is a Google Calendar-like application built using Next.js and PostgreSQL. It allows users to manage events with a filtering UI similar to Google Calendar, supporting navigation between previous and next months.
 
 ## Tech Stack
 
