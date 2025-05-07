@@ -9,8 +9,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "MasterBranch Code Challenge",
-  description: "MasterBranch Code Challenge created by DuyDuong",
+  title: "Google Calendar Clone",
+  description: "Google Calendar Clone created by DuyDuong",
 };
 
 export default function RootLayout({
